@@ -16,9 +16,19 @@ pipeline {
 
         stage('Ejecutar pipeline') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'credenciales', usernameVariable: 'DB_CREDENTIALS_USR', passwordVariable: 'DB_CREDENTIALS_PSW')]) {
-                    bat 'python main.py'
+                withCredentials([usernamePassword(credentialsId: 'DB_CREDENTIALS', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD')]) {
+                    bat """
+                        set DB_CREDENTIALS_USR=%DB_USER%
+                        set DB_CREDENTIALS_PSW=%DB_PASSWORD%
+                        python main.py
+                    """
                 }
+            }
+        }
+
+        stage('Guardar logs') {
+            steps {
+                archiveArtifacts artifacts: 'logs/pipeline.log', onlyIfSuccessful: true
             }
         }
     }

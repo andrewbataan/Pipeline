@@ -4,14 +4,14 @@ import re
 import os
 from datetime import datetime
 
-# --- Validar variables de entorno ---
+# VE 
 DB_USER = os.environ.get("DB_CREDENTIALS_USR")
 DB_PASSWORD = os.environ.get("DB_CREDENTIALS_PSW")
 
 if not DB_USER or not DB_PASSWORD:
-    raise ValueError("¡Credenciales de la base de datos no configuradas en Jenkins!")
+    raise ValueError("Credentials dosent match with Jenkins")
 
-# --- Conexión a PostgreSQL ---
+# Conection to postgres
 try:
     conn = psycopg2.connect(
         dbname="product_db",
@@ -25,7 +25,7 @@ except Exception as e:
     print(f"Error de conexión: {e}")
     raise
 
-# --- Crear tabla (si no existe) ---
+# create table if not exist
 try:
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS products (
@@ -41,7 +41,7 @@ except Exception as e:
     conn.rollback()
     raise
 
-# --- Leer y limpiar datos ---
+# read and clean data
 try:
     df = pd.read_csv("data/products.csv")
     cleaned = df.dropna(subset=["name", "price", "email"])
@@ -50,7 +50,7 @@ except Exception as e:
     print(f"Error al procesar CSV: {e}")
     raise
 
-# --- Insertar datos en PostgreSQL ---
+# insert into table of Postgres
 try:
     cursor.execute("DELETE FROM products")
     for _, row in cleaned.iterrows():
@@ -67,7 +67,7 @@ finally:
     cursor.close()
     conn.close()
 
-# --- Generar logs ---
+# create logs
 try:
     os.makedirs("logs", exist_ok=True)
     with open("logs/pipeline.log", "a") as log:
