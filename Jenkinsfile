@@ -4,9 +4,6 @@ pipeline {
     environment {
         PYTHON_PATH = "C:\\Users\\rolan\\AppData\\Local\\Programs\\Python\\Python312"
         PATH = "${env.PYTHON_PATH};${env.PYTHON_PATH}\\Scripts;${env.PATH}"
-        // Usa las credenciales configuradas en Jenkins
-        DB_CREDENTIALS_USR = credentials('DB_CREDENTIALS').username
-        DB_CREDENTIALS_PSW = credentials('DB_CREDENTIALS').password
     }
 
     stages {
@@ -19,7 +16,9 @@ pipeline {
 
         stage('Ejecutar pipeline') {
             steps {
-                bat 'python main.py'
+                withCredentials([usernamePassword(credentialsId: 'DB_CREDENTIALS', usernameVariable: 'DB_CREDENTIALS_USR', passwordVariable: 'DB_CREDENTIALS_PSW')]) {
+                    bat 'python main.py'
+                }
             }
         }
     }
