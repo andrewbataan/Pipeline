@@ -37,7 +37,7 @@ try:
     """)
     conn.commit()
 except Exception as e:
-    print(f"Error al crear tabla: {e}")
+    print(f"Error to create table: {e}")
     conn.rollback()
     raise
 
@@ -47,7 +47,7 @@ try:
     cleaned = df.dropna(subset=["name", "price", "email"])
     cleaned = cleaned[cleaned["email"].apply(lambda x: re.match(r"[^@]+@[^@]+\.[^@]+", str(x)) is not None)]
 except Exception as e:
-    print(f"Error al procesar CSV: {e}")
+    print(f"Error to process CSV: {e}")
     raise
 
 # insert into table of Postgres
@@ -60,7 +60,7 @@ try:
         )
     conn.commit()
 except Exception as e:
-    print(f"Error al insertar datos: {e}")
+    print(f"Error to insert data table: {e}")
     conn.rollback()
     raise
 finally:
