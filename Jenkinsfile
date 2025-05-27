@@ -16,7 +16,7 @@ pipeline {
 
         stage('Ejecutar pipeline') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'DB_CREDENTIALS', usernameVariable: 'DB_CREDENTIALS_USR', passwordVariable: 'DB_CREDENTIALS_PSW')]) {
+                withCredentials([usernamePassword(credentialsId: 'credenciales', usernameVariable: 'DB_CREDENTIALS_USR', passwordVariable: 'DB_CREDENTIALS_PSW')]) {
                     bat 'python main.py'
                 }
             }
