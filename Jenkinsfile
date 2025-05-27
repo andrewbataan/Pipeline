@@ -7,14 +7,14 @@ pipeline {
     }
 
     stages {
-        stage('Instalar dependencias') {
+        stage('Installing dependencies') {
             steps {
                 bat 'python -m pip install --upgrade pip setuptools wheel'
                 bat 'pip install -r requirements.txt'
             }
         }
 
-        stage('Ejecutar pipeline') {
+        stage('Execute pipeline') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'credenciales', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD')]) {
                     bat """
@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage('Guardar logs') {
+        stage('Save logs') {
             steps {
                 archiveArtifacts artifacts: 'logs/pipeline.log', onlyIfSuccessful: true
             }

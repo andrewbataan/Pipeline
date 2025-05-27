@@ -71,7 +71,7 @@ finally:
 try:
     os.makedirs("logs", exist_ok=True)
     with open("logs/pipeline.log", "a") as log:
-        log.write(f"{datetime.now()} - Cargadas {len(cleaned)} filas en PostgreSQL\n")
+        log.write(f"{datetime.now()} - Loaded {len(cleaned)} row in PostgreSQL\n")
 except Exception as e:
-    print(f"Error al generar logs: {e}")
+    print(f"Error to generate logs: {e}")
     raise
