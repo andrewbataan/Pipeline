@@ -1,0 +1,1 @@
+This application processes CSV files containing product data by cleaning the information and validating email addresses. The refined data is then stored in a PostgreSQL table named products. The entire process is automated through a Jenkins pipeline, ensuring efficient and streamlined data handling.
