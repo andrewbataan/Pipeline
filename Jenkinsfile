@@ -2,10 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DB_HOST = credentials('localhost')
-        DB_NAME = credentials('product_db')
-        DB_USER = credentials('postgres')
-        DB_PASSWORD = credentials('admin')
+        DB_USER = credentials('postgres') 
+        DB_PASSWORD = credentials('admin') 
     }
 
     stages {
@@ -17,14 +15,19 @@ pipeline {
 
         stage('Ejecutar pipeline') {
             steps {
-                bat 'python main.py'
+                bat 'process_data.py'
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
+            // Ejecutar archiveArtifacts dentro de un nodo
+            script {
+                node {
+                    archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
+                }
+            }
         }
     }
 }
