@@ -1,8 +1,12 @@
 pipeline {
     agent any
 
+    tools {
+        python 'Python3'   // Usa el nombre que pusiste en Jenkins
+    }
+
     environment {
-        DB_CREDENTIALS = credentials('POSTGRES_CREDENTIALS_ID') 
+        PATH = "${tool 'Python3'}\\Scripts;${tool 'Python3'};${env.PATH}"
     }
 
     stages {
@@ -14,17 +18,7 @@ pipeline {
 
         stage('Ejecutar pipeline') {
             steps {
-                bat 'python main.py'
-            }
-        }
-    }
-
-    post {
-        always {
-            script {
-                node {
-                    archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
-                }
+                bat 'python tu_script.py'
             }
         }
     }
