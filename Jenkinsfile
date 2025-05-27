@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DB_USER = credentials('postgres') 
-        DB_PASSWORD = credentials('admin') 
+        DB_CREDENTIALS = credentials('POSTGRES_CREDENTIALS_ID') /
     }
 
     stages {
@@ -15,14 +14,13 @@ pipeline {
 
         stage('Ejecutar pipeline') {
             steps {
-                bat 'process_data.py'
+                bat 'python main.py' // Asegúrate de que el script se llama main.py (no process_data.py)
             }
         }
     }
 
     post {
         always {
-            // Ejecutar archiveArtifacts dentro de un nodo
             script {
                 node {
                     archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
