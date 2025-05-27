@@ -2,28 +2,29 @@ pipeline {
     agent any
 
     environment {
-        PYTHONUNBUFFERED = "1"
+        DB_HOST = credentials('localhost')
+        DB_NAME = credentials('product_db')
+        DB_USER = credentials('postgres')
+        DB_PASSWORD = credentials('admin')
     }
 
     stages {
-
         stage('Instalar dependencias') {
             steps {
-                sh 'python -m venv venv'
-                sh '. venv/Scripts/activate && pip install -r requirements.txt'
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Ejecutar pipeline') {
             steps {
-                sh '. venv/Scripts/activate && bash run.sh'
+                bat 'python main.py'
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'logs/pipeline.log', fingerprint: true
+            archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
         }
     }
 }
