@@ -1,0 +1,11 @@
+id,name,price,email
+1,Laptop,1200.00,john@example.com
+2,Mouse,25.50,sara@company.com
+3,Keyboard,50.00,alice@example.com
+4,Monitor,199.99,bob@example.com
+5,Webcam,75.00,charlie@domain.com
+6,,100.00,invalid@example.com
+7,Tablet,,incomplete@domain.com
+8,Speaker,55.99,noreply@site
+9,Microphone,89.90,contact@audio.com
+10,Desk Lamp,30.00,hello@example.com
