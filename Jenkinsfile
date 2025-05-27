@@ -2,18 +2,27 @@ pipeline {
     agent any
 
     environment {
-        // Variables de entorno si las necesitas
         PYTHONUNBUFFERED = "1"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clonar repositorio') {
             steps {
-                git 'https://github.com/tuusuario/tu-proyecto.git'
+                git 'https://github.com/andrewbataan/Pipeline.git'
             }
         }
 
-        stage('Run ETL pipeline') {
+        stage('Instalar dependencias') {
+            steps {
+                sh '''
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Ejecutar pipeline') {
             steps {
                 sh './run.sh'
             }
