@@ -16,7 +16,7 @@ pipeline {
 
         stage('Ejecutar pipeline') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'DB_CREDENTIALS', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'credenciales', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD')]) {
                     bat """
                         set DB_CREDENTIALS_USR=%DB_USER%
                         set DB_CREDENTIALS_PSW=%DB_PASSWORD%
