@@ -1,25 +1,22 @@
 pipeline {
     agent any
 
-    tools {
-        Python 'Python3'  // ¡"Python" con P mayúscula!
-    }
-
     environment {
-        // Ajusta la variable PATH según el SO del agente:
-        PATH = "${tool 'Python3'};${tool 'Python3'}\\Scripts;${env.PATH}"  // Windows
+        // Ruta explícita al ejecutable de Python (ajustada a tu sistema)
+        PYTHON_PATH = "C:\\Users\\rolan\\AppData\\Local\\Programs\\Python\\Python312"
+        PATH = "${env.PYTHON_PATH};${env.PYTHON_PATH}\\Scripts;${env.PATH}" // Windows
     }
 
     stages {
         stage('Instalar dependencias') {
             steps {
-                bat 'pip install -r requirements.txt'  // Usa "sh" para Linux/Mac, "bat" para Windows
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Ejecutar pipeline') {
             steps {
-                bat 'python main.py'  // Usa "sh" para Linux/Mac, "bat" para Windows
+                bat 'python main.py'
             }
         }
     }
