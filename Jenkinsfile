@@ -6,26 +6,24 @@ pipeline {
     }
 
     stages {
-        stage('Clonar repositorio') {
-            steps {
-                git 'https://github.com/andrewbataan/Pipeline.git'
-            }
-        }
 
         stage('Instalar dependencias') {
             steps {
-                sh '''
-                python3 -m venv venv
-                source venv/bin/activate
-                pip install -r requirements.txt
-                '''
+                sh 'python -m venv venv'
+                sh '. venv/Scripts/activate && pip install -r requirements.txt'
             }
         }
 
         stage('Ejecutar pipeline') {
             steps {
-                sh './run.sh'
+                sh '. venv/Scripts/activate && bash run.sh'
             }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'logs/pipeline.log', fingerprint: true
         }
     }
 }
